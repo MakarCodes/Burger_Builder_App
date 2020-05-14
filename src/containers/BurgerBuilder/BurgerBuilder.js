@@ -10,9 +10,17 @@ import * as actions from '../../store/actions/index'
 
 
 class BurgerBuilder extends Component {
-
     componentDidMount() {
         this.props.onInitIngredients();
+    }
+
+    updatePurchaseState = (ingredients) => {
+        const ingredientsSum = Object.keys(ingredients).map(ingredientKey => {
+            return ingredients[ingredientKey]
+        }).reduce((sum, el) => {
+            return sum + el;
+        }, 0);
+        return ingredientsSum > 0;
     }
 
     render() {
@@ -26,20 +34,22 @@ class BurgerBuilder extends Component {
 
         let burger = this.props.error ? <p>Ingredients cannot be loaded!</p> : <Spinner />;
         if(this.props.ingredients !== null) {
-            burger = <Burger ingredients={this.props.ingredients}/>
-        }
-     
-        return (
+            burger = (
             <React.Fragment>
-                {/* <Burger ingredients={this.props.ingredients}/> */}
-                {burger}
+                <Burger ingredients={this.props.ingredients}/>
                 <BuildControls 
                 addIngredient={this.props.onAddedIngredient}
                 removeIngredient={this.props.onRemovedIngredient}
                 disabled={disabledInfo}
-                price={this.props.totalPrice}
-                />
+                purchaseable={this.updatePurchaseState(this.props.ingredients)}
+                price={this.props.totalPrice} />
             </React.Fragment>
+            )
+        }
+        return (
+           <React.Fragment>
+               {burger}
+           </React.Fragment>
         )
     }
 }
@@ -51,7 +61,6 @@ const mapStateToProps = state => {
         error: state.error
     }
 }
-
 
 const mapDispatchToProps = dispatch => {
     return {
