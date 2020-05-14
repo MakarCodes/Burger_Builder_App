@@ -3,13 +3,7 @@ import { updateObject } from '../utility/utility'
 import { setIngredients } from '../actions';
 
 const initialState = {
-    // ingredients: null,
-    ingredients: {
-        salad: 1,
-        bacon: 2,
-        cheese: 2,
-        meat: 1
-    },
+    ingredients: null,
     totalPrice: 3.99,
     error: false
 };

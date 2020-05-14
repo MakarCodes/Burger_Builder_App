@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import Burger from '../../components/Buger/Burger'
 import BuildControls from '../../components/Buger/BuildControls/BuildControls'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 import * as actions from '../../store/actions/index'
 
@@ -18,14 +19,23 @@ class BurgerBuilder extends Component {
         const disabledInfo = {
             ...this.props.ingredients
         }
-
         for(let key in disabledInfo) {
             // disableInfo[key] = disableInfo[key] <= 0 ? true : false
             disabledInfo[key] = disabledInfo[key] <= 0
         }
+
+        let burger = null;
+        this.props.ingredients !== null ? (
+            burger = <Burger ingredients={this.props.ingredients}/>
+        ) 
+        : 
+        (
+            burger = <Spinner />
+        )
         return (
             <React.Fragment>
-                <Burger ingredients={this.props.ingredients}/>
+                {/* <Burger ingredients={this.props.ingredients}/> */}
+                {burger}
                 <BuildControls 
                 addIngredient={this.props.onAddedIngredient}
                 removeIngredient={this.props.onRemovedIngredient}
