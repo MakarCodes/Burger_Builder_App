@@ -24,14 +24,11 @@ class BurgerBuilder extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
 
-        let burger = null;
-        this.props.ingredients !== null ? (
+        let burger = this.props.error ? <p>Ingredients cannot be loaded!</p> : <Spinner />;
+        if(this.props.ingredients !== null) {
             burger = <Burger ingredients={this.props.ingredients}/>
-        ) 
-        : 
-        (
-            burger = <Spinner />
-        )
+        }
+     
         return (
             <React.Fragment>
                 {/* <Burger ingredients={this.props.ingredients}/> */}
@@ -50,7 +47,8 @@ class BurgerBuilder extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        totalPrice: state.totalPrice
+        totalPrice: state.totalPrice,
+        error: state.error
     }
 }
 
