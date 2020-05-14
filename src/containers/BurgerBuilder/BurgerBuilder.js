@@ -22,10 +22,15 @@ class BurgerBuilder extends Component {
     purchaseControl = () => {
         this.setState({ purchasing: true})
     }
-
+    
     purchaseCancelHandler = () => {
         this.setState({ purchasing: false})
     }
+
+    purchaseProceedHandler = () => {
+        alert('You continue!')
+    }
+    
 
     updatePurchaseState = (ingredients) => {
         const ingredientsSum = Object.keys(ingredients).map(ingredientKey => {
@@ -63,7 +68,10 @@ class BurgerBuilder extends Component {
 
             orderSummary = (
                 <OrderSummary 
-                    ingredients={this.props.ingredients}/>
+                    ingredients={this.props.ingredients}
+                    proceedWithPurchase={this.purchaseProceedHandler}
+                    cancelPurchase={this.purchaseCancelHandler}
+                    />
             );
         }
         return (
