@@ -21,7 +21,7 @@ class ContactData extends Component {
         // create order object and send it to the server
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price,
+            price: this.props.price
         }
 
         axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
@@ -52,7 +52,7 @@ class ContactData extends Component {
 const mapStateToProps = state => {
     return {
         ingredients: state.ingredients,
-        price: state.totalPirce
+        price: state.totalPrice
     }
 }
 
