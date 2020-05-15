@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import Layout from './containers/Layout/Layout'
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder'
+import Checkout from './components/Checkout/Checkout'
 
 
 class App extends Component {
@@ -12,6 +13,7 @@ class App extends Component {
         <Layout>
           <Switch>
             <Route exact path="/" component={BurgerBuilder} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         </Layout>
       </div>
