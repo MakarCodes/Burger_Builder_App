@@ -19,4 +19,4 @@ const Modal = ({ show, children, hideBackdrop }) => {
     );
 };
 
-export default Modal;
+export default React.memo(Modal);
