@@ -1,17 +1,66 @@
 import React, { Component } from 'react'
-import Button from '../../UI/Button/Button'
-import classes from './ContactData.module.css'
 import { connect } from 'react-redux'
 import axios from 'axios'
+
+import classes from './ContactData.module.css'
+import Button from '../../UI/Button/Button'
+import FormInput from '../../UI/FormInput/FormInput'
+
 
 class ContactData extends Component {
 
     state = {
-        name: '',
-        email: '',
-        adress: {
-            street: '',
-            postalCode: ''
+        orderForm: {
+            name: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    name: 'name',
+                    id: 'name',
+                    placeholder: 'Your name...'
+                },
+                value: ''
+            },
+            email: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'email',
+                    name: 'email',
+                    id: 'email',
+                    placeholder: 'Your email...'
+                },
+                value: ''
+            },
+            street: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    name: 'street',
+                    id: 'street',
+                    placeholder: 'Street...'
+                },
+                value: ''
+            },
+            zipCode: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    name: 'zipCode',
+                    id: 'zipCode',
+                    placeholder: 'Zip Code...'
+                },
+                value: ''
+            },
+            country: {
+                elementType: 'input',
+                elementConfig: {
+                    type: 'text',
+                    name: 'country',
+                    id: 'country',
+                    placeholder: 'Your country...'
+                },
+                value: ''
+            }
         }
     }
 
@@ -32,14 +81,31 @@ class ContactData extends Component {
     }
 
     render() {
+        //creating array from orderForm object in state
+        const ordeFormElementsArray = [];
+        for( let key in this.state.orderForm ) {
+            ordeFormElementsArray.push({
+                id: key,
+                config: this.state.orderForm[key]
+            });
+        }
+
+        let listOfInputFields = ordeFormElementsArray.map(inputElement => {
+            return ( <FormInput
+                        key={inputElement.id} 
+                        elementType={inputElement.config.elementType} 
+                        elementConfig= {inputElement.config.elementConfig} 
+                        value= {inputElement.config.value}  /> )
+        })
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
                 <form>
-                    <input type="text" name="name" placeholder="Your name..."/>
-                    <input type="email" name="email" placeholder="Your email..."/>
-                    <input type="text" name="street" placeholder="Street..."/>
-                    <input type="text" name="postal" placeholder="Postal..."/>
+                    {listOfInputFields}
+                    <FormInput inputype={'input'} type="text" name="name" placeholder="Your name..."/>
+                    <FormInput inputype={'input'} type="email" name="email" placeholder="Your email..."/>
+                    <FormInput inputype={'input'} type="text" name="street" placeholder="Street..."/>
+                    <FormInput inputype={'input'} type="text" name="postal" placeholder="Postal..."/>
                     <Button 
                         clicked={this.orderHandler}
                         btnType="Success">ORDER</Button>

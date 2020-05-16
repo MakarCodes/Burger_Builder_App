@@ -14,5 +14,19 @@
     outline: none;
     border: 1px solid #ccc;
     background-color: #fff;
+    font: inherit;
+    padding: 6px 10px;
+    display: block;
     width: 100%;
+}
+
+.InputElement:focus {
+    outline: none;
+    background-color: #ccc;
+    box-sizing: border-box;
+}
+
+.Invalid {
+    border: solid 1px red;
+    background-color: rgb(241, 169, 161);
 }
