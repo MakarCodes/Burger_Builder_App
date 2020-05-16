@@ -60,6 +60,16 @@ class ContactData extends Component {
                     placeholder: 'Your country...'
                 },
                 value: ''
+            },
+            deliveryMethod: {
+                elementType: 'select',
+                elementConfig: {
+                    options: [
+                        {value: 'fastest', displayValue: 'Fastest'},
+                        {value: 'cheapest', displayValue: 'Cheapest'}
+                    ]
+                },
+                value: 'fastest'
             }
         }
     }
@@ -67,10 +77,15 @@ class ContactData extends Component {
     orderHandler = (event) => {
         event.preventDefault();
         console.log(this.props.ingredients)
+        const formData = {};
+        for(let formElementIndentifier in this.state.orderForm) {
+            formData[formElementIndentifier] = this.state.orderForm[formElementIndentifier].value
+        }
         // create order object and send it to the server
         const order = {
             ingredients: this.props.ingredients,
-            price: this.props.price
+            price: this.props.price,
+            orderData: formData
         }
 
         axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
@@ -78,6 +93,16 @@ class ContactData extends Component {
                 // chnage loading status to false
                 this.props.history.push('/');
             })
+    }
+
+    inputChangeHandler = (event, inputIdentifier) => {
+        const copiedOrderForm = {
+            ...this.state.orderForm
+        };
+        const copiedFromElements = {...copiedOrderForm[inputIdentifier]};
+        copiedFromElements.value = event.target.value;
+        copiedOrderForm[inputIdentifier] = copiedFromElements;
+        this.setState({orderForm: copiedOrderForm});
     }
 
     render() {
@@ -92,6 +117,7 @@ class ContactData extends Component {
 
         let listOfInputFields = ordeFormElementsArray.map(inputElement => {
             return ( <FormInput
+                        change={(event) => {this.inputChangeHandler(event, inputElement.id)}}
                         key={inputElement.id} 
                         elementType={inputElement.config.elementType} 
                         elementConfig= {inputElement.config.elementConfig} 
@@ -100,15 +126,9 @@ class ContactData extends Component {
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
-                <form>
+                <form onSubmit={this.orderHandler}>
                     {listOfInputFields}
-                    <FormInput inputype={'input'} type="text" name="name" placeholder="Your name..."/>
-                    <FormInput inputype={'input'} type="email" name="email" placeholder="Your email..."/>
-                    <FormInput inputype={'input'} type="text" name="street" placeholder="Street..."/>
-                    <FormInput inputype={'input'} type="text" name="postal" placeholder="Postal..."/>
-                    <Button 
-                        clicked={this.orderHandler}
-                        btnType="Success">ORDER</Button>
+                    <Button btnType="Success">ORDER</Button>
                 </form>
             </div>
         )
