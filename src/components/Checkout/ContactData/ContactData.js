@@ -102,11 +102,11 @@ class ContactData extends Component {
                 validation: {},
                 valid: true
             }
-        }
+        },
+        formIsValid: false
     }
 
     checkValidity = (value, rules) => {
-        console.log(value, rules)
         let isValid = true;
    
         if(rules.required) {
@@ -158,8 +158,12 @@ class ContactData extends Component {
         copiedFromElements.touched = true;
         copiedFromElements.valid = this.checkValidity(copiedFromElements.value, copiedFromElements.validation)
         copiedOrderForm[inputIdentifier] = copiedFromElements;
-        console.log(copiedFromElements)
-        this.setState({orderForm: copiedOrderForm});
+        
+        let formIsValid = true;
+        for(let inputIdentifier in copiedOrderForm) {
+            formIsValid = copiedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+        this.setState({orderForm: copiedOrderForm, formIsValid: formIsValid});
     }
 
     render() {
@@ -188,7 +192,7 @@ class ContactData extends Component {
                 <h4>Enter your Contact Data</h4>
                 <form onSubmit={this.orderHandler}>
                     {listOfInputFields}
-                    <Button btnType="Success">ORDER</Button>
+                    <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
                 </form>
             </div>
         )
