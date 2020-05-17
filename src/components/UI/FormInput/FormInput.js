@@ -2,12 +2,13 @@ import React from 'react';
 import classes from './FormInput.module.css'
 
 const FormInput = ( props ) => {
-    const { elementType, label, elementConfig, value, change, invalid, validationIsRequired } = props;
+    const { elementType, label, elementConfig, value, change, invalid, validationIsRequired, touched} = props;
     let inputElement = null;
-    const inputClasses = [classes.Input]
-    if(invalid && validationIsRequired) {
-        inputClasses.push(classes.Invalid)
-    }
+    const inputClasses = [classes.Input];
+    if(invalid && validationIsRequired && touched) {
+        inputClasses.push(classes.Invalid);
+    } 
+    
     switch(elementType) {
         case ('input'):
             inputElement = <input 

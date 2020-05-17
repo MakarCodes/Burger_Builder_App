@@ -23,7 +23,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -35,9 +36,11 @@ class ContactData extends Component {
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    isEmail: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             street: {
                 elementType: 'input',
@@ -51,7 +54,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             zipCode: {
                 elementType: 'input',
@@ -65,9 +69,11 @@ class ContactData extends Component {
                 validation: {
                     required: true,
                     minLength: 4,
-                    maxLength: 5
+                    maxLength: 5,
+                    isNumeric: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             country: {
                 elementType: 'input',
@@ -81,7 +87,8 @@ class ContactData extends Component {
                 validation: {
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -92,14 +99,16 @@ class ContactData extends Component {
                     ]
                 },
                 value: 'fastest',
+                validation: {},
                 valid: true
             }
         }
     }
 
     checkValidity = (value, rules) => {
+        console.log(value, rules)
         let isValid = true;
-
+   
         if(rules.required) {
             isValid = value.trim() !== '' && isValid;
         }
@@ -109,6 +118,15 @@ class ContactData extends Component {
         if(rules.maxLength) {
             isValid = value.length <= rules.maxLength && isValid; 
         }
+        if (rules.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+        if (rules.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
+        }
+        return isValid;
     }
 
     orderHandler = (event) => {
@@ -137,8 +155,10 @@ class ContactData extends Component {
         };
         const copiedFromElements = {...copiedOrderForm[inputIdentifier]};
         copiedFromElements.value = event.target.value;
-        copiedFromElements.validation = this.checkValidity(copiedFromElements.value, copiedFromElements.validation)
+        copiedFromElements.touched = true;
+        copiedFromElements.valid = this.checkValidity(copiedFromElements.value, copiedFromElements.validation)
         copiedOrderForm[inputIdentifier] = copiedFromElements;
+        console.log(copiedFromElements)
         this.setState({orderForm: copiedOrderForm});
     }
 
@@ -158,7 +178,8 @@ class ContactData extends Component {
                         key={inputElement.id} 
                         elementType={inputElement.config.elementType} 
                         elementConfig= {inputElement.config.elementConfig}
-                        invalid={!inputElement.config.invalid}
+                        invalid={!inputElement.config.valid}
+                        touched={inputElement.config.touched}
                         validationIsRequired={inputElement.config.validation}
                         value= {inputElement.config.value}  /> )
         })
