@@ -15,9 +15,11 @@ export const purchaseBurgerFail = (error) => {
     };
 };
 
-export const purchaseBurgerSuccess = () => {
+export const purchaseBurgerSuccess = (id, orderData) => {
     return {
-        type: actionTypes.PURCHASE_BURGER_SUCCESS
+        type: actionTypes.PURCHASE_BURGER_SUCCESS,
+        orderID: id,
+        orderData: orderData
     };
 };
 
@@ -26,8 +28,7 @@ export const purchaseBurger = (orderData) => {
         dispatch(purchaseBurgerStart());
         axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', orderData)
             .then(response => {
-                console.log(response.data);
-                dispatch(purchaseBurgerSuccess());
+                dispatch(purchaseBurgerSuccess(response.data.name, orderData));
             })
             .catch(err => {
                 dispatch(purchaseBurgerFail(err));

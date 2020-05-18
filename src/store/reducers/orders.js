@@ -3,7 +3,8 @@ import { updateObject } from '../utility/utility'
 
 const initialState = {
     purchased: false,
-    loading: false
+    loading: false,
+    orders: []
 }
 
 const purchaseBurgerStart = (state, action) => {
@@ -15,7 +16,13 @@ const purchaseBurgerFail = (state, action) => {
 };
 
 const purchaseBurgerSuccess = (state, action) => {
-    return updateObject(state, {loading: false, purchased: true})
+    const orderWithId = updateObject(action.orderData, {id: action.orderID});
+    return updateObject(state, 
+        { 
+        loading: false, 
+        purchased: true,
+        orders: state.orders.concat(orderWithId)
+        })
 }
 
 const reducer = (state = initialState, action) => {
