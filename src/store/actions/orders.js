@@ -1,5 +1,45 @@
 import * as actionTypes from './actionTypes'
 import axios from 'axios'
+import { fetchIngredientsFailed } from './burgerBuilder'
+
+export const fetchOrdersStart = () => {
+    return {
+        type: actionTypes.FETCH_ORDERS_START
+    }
+}
+
+export const fetchOrdersFail = (error) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_FAIL
+    }
+}
+
+export const fetchOrdersSuccess = (orders) => {
+    return {
+        type: actionTypes.FETCH_ORDERS_SUCCESS,
+        orders: orders
+    }
+}
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(fetchOrdersStart());
+        axios.get('https://burger-app-ce2e9.firebaseio.com/orders.json')
+            .then(response => {
+                const orders = [];
+                for( let key in response.data) {
+                    orders.push({
+                        ...response.data[key],
+                        id: key
+                    })
+                }
+                dispatch(fetchOrdersSuccess(orders));
+            })
+            .catch(error => {
+                dispatch(fetchOrdersFail(error));
+            })
+    }
+}
 
 
 export const purchaseBurgerStart = () => {

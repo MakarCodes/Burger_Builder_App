@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Order.module.css'
 
-const Order = ({ ingredients, price}) => {
+const Order = ({ ingredients, price, personName }) => {
     const ingredientsArray = [];
     for (let ingredient in ingredients) {
         ingredientsArray.push(
@@ -28,6 +28,7 @@ const Order = ({ ingredients, price}) => {
         <div className={classes.Order}>
             <p>Ingredients: {ingredientsOutput}</p>
             <p>Price <strong>USD {Number.parseFloat(price).toFixed(2)}</strong></p>
+            <p>Order by: <strong>{personName}</strong></p>
         </div>
     );
 };
