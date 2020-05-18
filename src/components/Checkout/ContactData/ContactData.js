@@ -5,6 +5,7 @@ import axios from 'axios'
 import classes from './ContactData.module.css'
 import Button from '../../UI/Button/Button'
 import FormInput from '../../UI/FormInput/FormInput'
+import Spinner from '../../UI/Spinner/Spinner'
 import * as actions from '../../../store/actions/index'
 
 
@@ -137,7 +138,7 @@ class ContactData extends Component {
         for(let formElementIndentifier in this.state.orderForm) {
             formData[formElementIndentifier] = this.state.orderForm[formElementIndentifier].value
         }
-        // create order object and send it to the server
+
         const order = {
             ingredients: this.props.ingredients,
             price: this.props.price,
@@ -145,11 +146,6 @@ class ContactData extends Component {
         }
 
         this.props.onPurchaseBurger(order);
-
-        // axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
-        //     .then(response => {
-        //         this.props.history.push('/');
-        //     })
     }
 
     inputChangeHandler = (event, inputIdentifier) => {
@@ -190,13 +186,22 @@ class ContactData extends Component {
                         validationIsRequired={inputElement.config.validation}
                         value= {inputElement.config.value}  /> )
         })
+
+        let form = (
+            <form onSubmit={this.orderHandler}>
+                {listOfInputFields}
+                <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
+            </form>
+        )
+
+        if(this.props.loading) {
+            form = <Spinner />;
+        }
+        
         return (
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
-                <form onSubmit={this.orderHandler}>
-                    {listOfInputFields}
-                    <Button btnType="Success" disabled={!this.state.formIsValid}>ORDER</Button>
-                </form>
+                {form}
             </div>
         )
     }
