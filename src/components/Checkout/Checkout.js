@@ -6,20 +6,21 @@ import CheckoutSummary from '../../components/Order/CheckoutSummary/CheckoutSumm
 import ContactData from './ContactData/ContactData'
 
 const Checkout = (props) => {
-    const checkoutCancelHandler = () => props.history.goBack();
-    const checkoutContinueHandler = () => props.history.replace('/checkout/contact-data');
+    const { history, ingredients, purchased, match } = props;
+    const checkoutCancelHandler = () => history.goBack();
+    const checkoutContinueHandler = () => history.replace('/checkout/contact-data');
     let checkoutSummary = <Redirect to='/'/>;
-    if(props.ingredients) {
-        const purchaseRedirect = props.purchased ? <Redirect to='/'/> : null
+    if(ingredients) {
+        const purchaseRedirect = purchased ? <Redirect to='/'/> : null
         checkoutSummary = (
             <div>
                 { purchaseRedirect }
                 <CheckoutSummary
                 checkoutCancelled={checkoutCancelHandler}
                 checkoutContinued={checkoutContinueHandler}
-                ingredients={props.ingredients}/>
+                ingredients={ingredients}/>
                 <Route 
-                    path={props.match.path + '/contact-data'} 
+                    path={match.path + '/contact-data'} 
                     component={ContactData}/>
             </div>
         )

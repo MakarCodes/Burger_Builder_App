@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes'
 import axios from 'axios'
-import { fetchIngredientsFailed } from './burgerBuilder'
 
 export const fetchOrdersStart = () => {
     return {
