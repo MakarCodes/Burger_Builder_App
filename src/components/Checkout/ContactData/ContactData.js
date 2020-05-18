@@ -5,6 +5,7 @@ import axios from 'axios'
 import classes from './ContactData.module.css'
 import Button from '../../UI/Button/Button'
 import FormInput from '../../UI/FormInput/FormInput'
+import * as actions from '../../../store/actions/index'
 
 
 
@@ -143,10 +144,12 @@ class ContactData extends Component {
             orderData: formData
         }
 
-        axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
-            .then(response => {
-                this.props.history.push('/');
-            })
+        this.props.onPurchaseBurger(order);
+
+        // axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
+        //     .then(response => {
+        //         this.props.history.push('/');
+        //     })
     }
 
     inputChangeHandler = (event, inputIdentifier) => {
@@ -203,8 +206,14 @@ const mapStateToProps = state => {
     return {
         ingredients: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        
-    }
-}
+        loading: state.orders.loading
+    };
+};
 
-export default connect(mapStateToProps)(ContactData)
+const mapDispatchToProps = dispatch => {
+    return {
+        onPurchaseBurger: orderData => dispatch(actions.purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData)
