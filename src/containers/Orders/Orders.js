@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import Order from '../../components/Order/Order/Order'
 import * as actions from '../../store/actions/index'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-orders';
 
 class Orders extends Component {
 
@@ -44,6 +46,6 @@ const mapToDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapToDispatchToProps)(Orders)
+export default connect(mapStateToProps,mapToDispatchToProps)(withErrorHandler(Orders, axios))
 
 

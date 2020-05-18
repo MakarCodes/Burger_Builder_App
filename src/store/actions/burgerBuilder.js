@@ -1,7 +1,5 @@
 import * as actionTypes from './actionTypes'
-import axios from 'axios';
-
-// addIngredient, removeIngredient, setIngredeint, initIngreient, fetch ingredient
+import axios from '../../axios-orders'
 
 export const addIngredient = name => {
     return {
@@ -32,7 +30,7 @@ export const setIngredients = (ingredients) => {
 
 export const initIngredients = () => {
     return dispatch => {
-        axios.get('https://burger-app-ce2e9.firebaseio.com/ingredients.json').then((response) => {
+        axios.get('/ingredients.json').then((response) => {
             dispatch(setIngredients(response.data))
         })
         .catch(err => {

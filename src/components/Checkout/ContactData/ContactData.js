@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
+import axios from '../../../axios-orders'
 
 import classes from './ContactData.module.css'
 import Button from '../../UI/Button/Button'
 import FormInput from '../../UI/FormInput/FormInput'
 import Spinner from '../../UI/Spinner/Spinner'
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler'
 import * as actions from '../../../store/actions/index'
 
 
@@ -221,4 +222,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactData)
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios))
