@@ -46,7 +46,7 @@ const setInitialIngredients = (state, action) => {
             cheese: action.ingredients.cheese,
             meat: action.ingredients.meat
         },
-        totalPrice: 5.55,
+        totalPrice: 3.99,
         error: false
     })
 }

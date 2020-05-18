@@ -7,6 +7,7 @@ import Button from '../../UI/Button/Button'
 import FormInput from '../../UI/FormInput/FormInput'
 
 
+
 class ContactData extends Component {
 
     state = {
@@ -144,7 +145,6 @@ class ContactData extends Component {
 
         axios.post('https://burger-app-ce2e9.firebaseio.com/orders.json', order)
             .then(response => {
-                // chnage loading status to false
                 this.props.history.push('/');
             })
     }
@@ -201,8 +201,9 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
     return {
-        ingredients: state.ingredients,
-        price: state.totalPrice
+        ingredients: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        
     }
 }
 
