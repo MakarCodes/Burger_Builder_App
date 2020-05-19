@@ -15,7 +15,8 @@ const SideDrawer = ({closeSieDrawer, openSideDrawer, isAuth}) => {
             <Backdrop 
                 showBackdrop={openSideDrawer}
                 hideBackdrop={closeSieDrawer}/>
-                <div className={attachedClasses.join(' ')}>
+                <div className={attachedClasses.join(' ')}
+                     onClick={closeSieDrawer}>
                     <div className={classes.Logo}>
                         <Logo/>
                     </div>
