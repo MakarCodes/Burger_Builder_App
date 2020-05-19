@@ -1,4 +1,32 @@
+## General info
+Burger builder is an responsive application, which allows users to build thier own burger and place an order for it!
+To place an order, the user must be logged in. Authenticated users can place orders and view order history.
+To place an order, you must complete a form with the required data, which are send to the server.
+The application was created while learning React and Redux. Project covers routing as well.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Technologies
+Project is created with:
+* React 16.13.1
+* Redux
+* CSS3
+* Firebase
+
+## Live
+https://makarcodes.github.io/Burger_Builder_App
+	
+## Setup
+To run this project, clone it and open with live server:
+```
+$ cd to the folder where you want to download the project
+$ git clone https://github.com/MakarCodes/Burger_Builder_App.git
+$ npm install
+$ npm start
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```
+
 
 ## Available Scripts
 
