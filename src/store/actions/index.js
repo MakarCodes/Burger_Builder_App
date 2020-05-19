@@ -11,5 +11,9 @@ export {
     fetchOrders
 } from './orders'
 
+export {
+    auth
+} from './auth'
+
 
 
